@@ -10,14 +10,35 @@
   },
   "metadata": {
     "categories": {
-      "finance": { "title": { "en": "Finance", "zh": "金融数据" } }
+      "finance": {
+        "title": {
+          "en": "Finance",
+          "zh": "金融数据"
+        }
+      }
     },
     "labels": {
-      "web": { "title": { "en": "Web panel", "zh": "Web 面板" } },
-      "a-share": { "title": { "en": "A-share", "zh": "A 股" } }
+      "web": {
+        "title": {
+          "en": "Web panel",
+          "zh": "Web 面板"
+        }
+      },
+      "a-share": {
+        "title": {
+          "en": "A-share",
+          "zh": "A 股"
+        }
+      }
     },
     "sortKeys": {
-      "updated": { "title": { "en": "Updated", "zh": "更新时间" }, "order": "desc" }
+      "updated": {
+        "title": {
+          "en": "Updated",
+          "zh": "更新时间"
+        },
+        "order": "desc"
+      }
     }
   },
   "plugins": [
@@ -33,15 +54,26 @@
       },
       "icon": "./icon.svg",
       "author": "dsh-dividend-yield contributors",
-      "homepage": "https://github.com/OWNER/dsh-dividend-yield",
+      "homepage": "https://github.com/example/dsh-dividend-yield",
       "repository": {
-        "url": "https://github.com/OWNER/dsh-dividend-yield"
+        "url": "https://github.com/example/dsh-dividend-yield"
       },
       "metadata": {
         "category": "finance",
-        "keywords": ["dividend", "dividend-yield", "股息率", "a-share", "jisilu"],
-        "labels": ["web", "a-share"],
-        "sortKeys": { "updated": 1763772600 }
+        "keywords": [
+          "dividend",
+          "dividend-yield",
+          "股息率",
+          "a-share",
+          "jisilu"
+        ],
+        "labels": [
+          "web",
+          "a-share"
+        ],
+        "sortKeys": {
+          "updated": 1763772600
+        }
       },
       "versions": [
         {
@@ -49,10 +81,12 @@
           "publishTimestamp": 1763772600,
           "source": {
             "type": "git",
-            "url": "https://github.com/OWNER/dsh-dividend-yield.git",
-            "commit": "95c26f77b5535b258ebee405616216e97cbda9c9"
+            "url": "https://github.com/example/dsh-dividend-yield.git",
+            "commit": "466be93fe8109e1f9d02121b507663c72b3a0c65"
           },
-          "engines": { "dsh": "^0.2.0" }
+          "engines": {
+            "dsh": "^0.2.0"
+          }
         }
       ]
     }

@@ -50,7 +50,7 @@
           "source": {
             "type": "git",
             "url": "https://github.com/OWNER/dsh-dividend-yield.git",
-            "commit": "1fe9def5b8bbcfbe50634f8cfb5ba9e93f2fcd14"
+            "commit": "95c26f77b5535b258ebee405616216e97cbda9c9"
           },
           "engines": { "dsh": "^0.2.0" }
         }

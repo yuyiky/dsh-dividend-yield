@@ -25,9 +25,72 @@ DSH Web GUI 插件：把[集思录 · 股息率](https://www.jisilu.cn/data/stoc
 
 ## 安装
 
-在 DSH 桌面端通过应用内插件管理器安装本目录（bundle 为 `link:` 本地路径即可），或在 `~/.dsh/profiles/desktop/package.json` 中把本目录加入 `dependencies` 与 `dsh.profile.bundles` 后重启。
+安装后侧栏出现「股息率」入口，点击打开面板。首次打开会在后台抓取全市场快照（网络正常约 10 秒～3 分钟，面板上显示进度），之后自动缓存与定时刷新。
 
-安装后侧栏出现「股息率」入口，点击打开面板。
+### 方式一：从 GitHub 安装（推荐，别人用这个）
+
+在 DSH 桌面端「插件」页的安装入口填入仓库地址：
+
+```
+https://github.com/<你的账号>/dsh-dividend-yield
+```
+
+也可以走宿主接口：
+
+```bash
+curl -X POST http://127.0.0.1:<GUI 端口>/api/pluginManager/installBundle \
+  -H "Cookie: <你浏览器里的 dsh-auth-... >" -H 'Content-Type: application/json' \
+  -d '{"type":"client-request","rpcId":"r1","method":"pluginManager/installBundle",
+       "payload":{"args":{"spec":"https://github.com/<你的账号>/dsh-dividend-yield.git",
+                          "options":{"enabled":true}}}}'
+```
+
+### 方式二：从本地目录或 .tgz 安装
+
+拿到本仓库后（`git clone` 或下载 zip 解压），在插件管理器里填入**绝对路径**：
+
+```
+/Users/你/dsh-dividend-yield
+```
+
+或先把打包产物发过去再装（34 KB，不含运行时快照）：
+
+```bash
+pnpm pack            # 生成 dsh-dividend-yield-0.2.0.tgz
+# 对方：installBundle spec = /绝对路径/dsh-dividend-yield-0.2.0.tgz
+```
+
+### 方式三：出现在「插件 → 发现」里
+
+`dist/dsh-plugin-index.json` 是一个格式为 1 的插件市场索引，已通过 `@deepseek-ai/dsh-plugin-market-index` 的校验。把该文件发布到任意 https 地址（GitHub Pages、Gist raw、对象存储均可），然后在「插件 → 发现 → 自定义索引」中填这个 URL，就能在界面里浏览并一键安装。
+
+索引内容：
+
+```json
+{
+  "format": 1,
+  "plugins": [
+    { "name": "dsh-dividend-yield", "versions": [{ "version": "0.2.0", "source": { "type": "git", "url": "…", "commit": "…" } }] }
+  ]
+}
+```
+
+### 方式四：发布到 npm
+
+```bash
+pnpm publish --access public
+# 之后别人可以直接：installBundle spec = dsh-dividend-yield
+```
+
+包名 `dsh-dividend-yield` 在 npm 上若已被占用，可改成 `@你的scope/dsh-dividend-yield` 并同步修改 `dist/dsh-plugin-index.json` 里的 `name`。
+
+## 发布（维护者）
+
+```bash
+node scripts/publish.mjs --repo git@github.com:<你的账号>/dsh-dividend-yield.git
+```
+
+脚本会校验工作区、把 `dist/dsh-plugin-index.json` 的 `source.commit` 指向包含完整代码的提交、推送并打印安装命令。只想本地打包就用 `pnpm pack`。
 
 ## 接口（宿主半片 `/api/dividend-yield`）
 
@@ -67,6 +130,8 @@ src/panel.js      纯 DOM 面板
 src/client-entry.js  客户端入口模板
 scripts/build-client.mjs  面板内联构建
 scripts/fetch-universe.mjs  CLI 抓取
+scripts/publish.mjs  发布到 GitHub 并回填索引 commit
+dist/dsh-plugin-index.json  插件市场索引（format 1）
 data/taxonomy.json 申万行业分类（31/134/346）
 data/meta.json     地区、市场与口径说明
 ```

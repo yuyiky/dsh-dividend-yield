@@ -1,0 +1,60 @@
+{
+  "format": 1,
+  "title": {
+    "en": "Dividend yield monitor",
+    "zh": "股息率监控"
+  },
+  "description": {
+    "en": "A-share dividend yield snapshots aggregated from jisilu.cn, with industry and region filters.",
+    "zh": "聚合集思录 A 股股息率数据的面板插件索引。"
+  },
+  "metadata": {
+    "categories": {
+      "finance": { "title": { "en": "Finance", "zh": "金融数据" } }
+    },
+    "labels": {
+      "web": { "title": { "en": "Web panel", "zh": "Web 面板" } },
+      "a-share": { "title": { "en": "A-share", "zh": "A 股" } }
+    },
+    "sortKeys": {
+      "updated": { "title": { "en": "Updated", "zh": "更新时间" }, "order": "desc" }
+    }
+  },
+  "plugins": [
+    {
+      "name": "dsh-dividend-yield",
+      "title": {
+        "en": "Dividend yield monitor",
+        "zh": "股息率监控"
+      },
+      "description": {
+        "en": "Sidebar panel that crawls the jisilu.cn dividend-yield table by Shenwan industry and region, then tracks TTM / static / 5-year average dividend yield with presets, watchlist and details.",
+        "zh": "侧栏面板：按申万行业与地区分区抓取集思录股息率表，跟踪股息率 TTM / 静态 / 5 年平均，支持预设筛选、自选与详情。"
+      },
+      "icon": "./icon.svg",
+      "author": "dsh-dividend-yield contributors",
+      "homepage": "https://github.com/OWNER/dsh-dividend-yield",
+      "repository": {
+        "url": "https://github.com/OWNER/dsh-dividend-yield"
+      },
+      "metadata": {
+        "category": "finance",
+        "keywords": ["dividend", "dividend-yield", "股息率", "a-share", "jisilu"],
+        "labels": ["web", "a-share"],
+        "sortKeys": { "updated": 1763772600 }
+      },
+      "versions": [
+        {
+          "version": "0.2.0",
+          "publishTimestamp": 1763772600,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/OWNER/dsh-dividend-yield.git",
+            "commit": "1fe9def5b8bbcfbe50634f8cfb5ba9e93f2fcd14"
+          },
+          "engines": { "dsh": "^0.2.0" }
+        }
+      ]
+    }
+  ]
+}

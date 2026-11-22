@@ -1,0 +1,72 @@
+# dsh-dividend-yield · 股息率监控
+
+DSH Web GUI 插件：把[集思录 · 股息率](https://www.jisilu.cn/data/stock/dividend_rate/)页面做成常驻侧栏的监控面板。
+
+![股息率监控面板](preview/gui-panel.png)
+
+![slot](https://img.shields.io/badge/DSH-Web%20GUI-3568f5) ![data](https://img.shields.io/badge/data-jisilu.cn-2fb5a3)
+
+## 功能
+
+- **全市场快照**：集思录非会员单次只返回 100 行，插件把接口按申万行业（一级→二级→三级）与沪深市场分区抓取，聚合出 5500+ 只 A 股的完整快照，落盘 `data/universe.json`，启动后自动刷新（默认 2 小时后过期、每小时检查）。
+- **概览**：有股息股票数、平均 / 中位股息率 TTM、≥3/4/5% 家数、股息率分布直方图、行业均值排行。
+- **筛选**：关键词（代码 / 名称 / 行业）、市场、申万一级 / 二级行业、地区、最低 TTM 股息率、最低 5 年均值、仅看自选、仅看有股息；一键预设（≥5% / ≥4% / ≥3% / 5 年均值 ≥5% / 自选）。
+- **表格**：21 列可排序指标（现价、涨跌幅、TTM、静态、5 年平均、市值、PE/PB 及温度、ROE、净利同比、营收/利润复合、负债与质押），股息率按档位着色，TTM ≥ 5% 行高亮；每页 50/100/200 条。
+- **自选**：星标保存到 `localStorage`，随开随用。
+- **详情抽屉**：点击任意行查看完整字段（股息率、行情估值、财务、风险与分红记录）。
+
+## 数据来源与口径
+
+- 接口：`POST https://www.jisilu.cn/data/stock/dividend_rate_list/`（form-urlencoded）。
+- `dividend_rate` = 股息率 TTM，`dividend_rate2` = 静态股息率，`dividend_rate5` = 5 年平均股息率。
+- 全市场快照由约 200 次分区请求聚合而成；请求失败会自动重试，失败分区记录在 `/snapshot` 的 `failed` 字段。
+- 集思录默认页显示「3,572 只满足条件」是因为默认过滤了零股息股票；本快照保留全部 5,586 只，面板默认勾选「仅看有股息」，所以默认列表与集思录口径一致。
+- 面板只做数据整理，不构成投资建议。
+
+## 安装
+
+在 DSH 桌面端通过应用内插件管理器安装本目录（bundle 为 `link:` 本地路径即可），或在 `~/.dsh/profiles/desktop/package.json` 中把本目录加入 `dependencies` 与 `dsh.profile.bundles` 后重启。
+
+安装后侧栏出现「股息率」入口，点击打开面板。
+
+## 接口（宿主半片 `/api/dividend-yield`）
+
+| 路径 | 说明 |
+| --- | --- |
+| `GET /health` | 存活与快照状态 |
+| `GET /status` | 抓取进度 / 快照时间 / 样本数（面板轮询用，体积小） |
+| `GET /meta` | 行业树、地区、市场、阈值与说明 |
+| `GET /snapshot` | 全市场快照 + 概览（gzip，约 5 MB JSON） |
+| `GET /summary` | 仅概览 + 状态 |
+| `POST /refresh` | 触发后台重抓（默认 60 秒节流；`?force=1` 强制） |
+
+## 开发
+
+```bash
+# 重新生成客户端 bundle（改动 src/panel.js 后）
+node scripts/build-client.mjs
+
+# 手动抓取全市场快照（调试用）
+node scripts/fetch-universe.mjs --concurrency 3
+
+# 单元测试
+node tests/engine.test.mjs
+```
+
+> 客户端 bundle 每次打开页面重新加载，改完 `src/panel.js` 只需重新 build 并刷新页面。
+> 宿主半片（`lib/index.js`、`lib/jisilu.js`、`lib/universe.js`）改动后，需在桌面端「插件」面板里把本插件停用再启用一次（或在插件管理器里重新安装），让模块重新导入。
+
+## 结构
+
+```
+lib/index.js      宿主半片：路由、快照加载与刷新
+lib/jisilu.js     集思录接口、字段归一化、分区抓取
+lib/universe.js   快照仓库、概览统计、持久化
+lib/client.js     生成产物（ModuleLoader bundle）
+src/panel.js      纯 DOM 面板
+src/client-entry.js  客户端入口模板
+scripts/build-client.mjs  面板内联构建
+scripts/fetch-universe.mjs  CLI 抓取
+data/taxonomy.json 申万行业分类（31/134/346）
+data/meta.json     地区、市场与口径说明
+```

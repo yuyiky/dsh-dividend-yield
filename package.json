@@ -1,0 +1,59 @@
+{
+  "name": "dsh-dividend-yield",
+  "version": "0.2.0",
+  "description": "A股股息率监控面板：按申万行业与地区跟踪股息率 TTM / 静态股息率 / 5 年平均股息率，提供高股息筛选、全市场快照、自选与详情",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "icon": "./icon.svg",
+  "files": [
+    "lib",
+    "data/meta.json",
+    "data/taxonomy.json",
+    "cordis.patch.yml",
+    "icon.svg",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "dsh-plugin",
+    "dsh-bundle",
+    "dividend",
+    "dividend-yield",
+    "stock",
+    "a-share",
+    "股息率"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime"
+      ]
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OWNER/dsh-dividend-yield.git",
+    "directory": "."
+  },
+  "homepage": "https://github.com/OWNER/dsh-dividend-yield#readme",
+  "bugs": "https://github.com/OWNER/dsh-dividend-yield/issues",
+  "scripts": {
+    "build:client": "node scripts/build-client.mjs",
+    "fetch:universe": "node scripts/fetch-universe.mjs",
+    "test": "node tests/engine.test.mjs"
+  },
+  "license": "MIT"
+}

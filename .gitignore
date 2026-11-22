@@ -1,0 +1,11 @@
+node_modules/
+dist/*.tgz
+*.log
+.DS_Store
+
+# 运行时抓取的全市场快照（5MB，首次启动自动生成）
+data/universe.json
+data/universe.json.*
+
+# 本地预览产物
+preview/*.html

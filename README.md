@@ -32,7 +32,7 @@ DSH Web GUI 插件：把[集思录 · 股息率](https://www.jisilu.cn/data/stoc
 在 DSH 桌面端「插件」页的安装入口填入仓库地址：
 
 ```
-https://github.com/<你的账号>/dsh-dividend-yield
+https://github.com/yuyiky/dsh-dividend-yield
 ```
 
 也可以走宿主接口：
@@ -41,7 +41,7 @@ https://github.com/<你的账号>/dsh-dividend-yield
 curl -X POST http://127.0.0.1:<GUI 端口>/api/pluginManager/installBundle \
   -H "Cookie: <你浏览器里的 dsh-auth-... >" -H 'Content-Type: application/json' \
   -d '{"type":"client-request","rpcId":"r1","method":"pluginManager/installBundle",
-       "payload":{"args":{"spec":"https://github.com/<你的账号>/dsh-dividend-yield.git",
+       "payload":{"args":{"spec":"https://github.com/yuyiky/dsh-dividend-yield.git",
                           "options":{"enabled":true}}}}'
 ```
 
@@ -62,7 +62,15 @@ pnpm pack            # 生成 dsh-dividend-yield-0.2.0.tgz
 
 ### 方式三：出现在「插件 → 发现」里
 
-`dist/dsh-plugin-index.json` 是一个格式为 1 的插件市场索引，已通过 `@deepseek-ai/dsh-plugin-market-index` 的校验。把该文件发布到任意 https 地址（GitHub Pages、Gist raw、对象存储均可），然后在「插件 → 发现 → 自定义索引」中填这个 URL，就能在界面里浏览并一键安装。
+`dist/dsh-plugin-index.json` 是一个格式为 1 的插件市场索引，已通过 `@deepseek-ai/dsh-plugin-market-index` 的校验。本仓库已经把它托管在可直接使用的地址：
+
+```
+https://cdn.jsdelivr.net/gh/yuyiky/dsh-dividend-yield@main/dist/dsh-plugin-index.json
+```
+
+（备用：`https://raw.githubusercontent.com/yuyiky/dsh-dividend-yield/main/dist/dsh-plugin-index.json`，国内直连较慢）
+
+在「插件 → 发现 → 自定义索引」里填入上面的 URL，就能在界面里浏览并一键安装。也可以把该文件放到任意 https 地址（GitHub Pages、对象存储），注意把 `dist/icon.svg` 一起放过去——索引里的 `icon` 是相对路径。
 
 索引内容：
 

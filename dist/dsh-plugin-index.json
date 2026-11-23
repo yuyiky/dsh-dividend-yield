@@ -54,9 +54,9 @@
       },
       "icon": "./icon.svg",
       "author": "dsh-dividend-yield contributors",
-      "homepage": "https://github.com/example/dsh-dividend-yield",
+      "homepage": "https://github.com/yuyiky/dsh-dividend-yield",
       "repository": {
-        "url": "https://github.com/example/dsh-dividend-yield"
+        "url": "https://github.com/yuyiky/dsh-dividend-yield"
       },
       "metadata": {
         "category": "finance",
@@ -81,8 +81,8 @@
           "publishTimestamp": 1763772600,
           "source": {
             "type": "git",
-            "url": "https://github.com/example/dsh-dividend-yield.git",
-            "commit": "466be93fe8109e1f9d02121b507663c72b3a0c65"
+            "url": "https://github.com/yuyiky/dsh-dividend-yield.git",
+            "commit": "28c4159b2c879a0c19d17530b8c75b4688a869d9"
           },
           "engines": {
             "dsh": "^0.2.0"

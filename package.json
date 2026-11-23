@@ -45,11 +45,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/OWNER/dsh-dividend-yield.git",
+    "url": "git+https://github.com/yuyiky/dsh-dividend-yield.git",
     "directory": "."
   },
-  "homepage": "https://github.com/OWNER/dsh-dividend-yield#readme",
-  "bugs": "https://github.com/OWNER/dsh-dividend-yield/issues",
+  "homepage": "https://github.com/yuyiky/dsh-dividend-yield#readme",
+  "bugs": "https://github.com/yuyiky/dsh-dividend-yield/issues",
   "scripts": {
     "build:client": "node scripts/build-client.mjs",
     "fetch:universe": "node scripts/fetch-universe.mjs",

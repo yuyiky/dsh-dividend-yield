@@ -27,13 +27,22 @@ DSH Web GUI 插件：把[集思录 · 股息率](https://www.jisilu.cn/data/stoc
 
 安装后侧栏出现「股息率」入口，点击打开面板。首次打开会在后台抓取全市场快照（网络正常约 10 秒～3 分钟，面板上显示进度），之后自动缓存与定时刷新。
 
+> ⚠️ **安装时请填仓库地址，不要填 `dsh-dividend-yield`。**
+> 这个包**没有发布到 npm**，填裸包名时插件管理器会拿它去 npm registry 查，查不到就会在输入框下方报红字「**未找到相关插件**」。
+> 正确做法是填 `https://github.com/yuyiky/dsh-dividend-yield`。
+
 ### 方式一：从 GitHub 安装（推荐，别人用这个）
 
-在 DSH 桌面端「插件」页的安装入口填入仓库地址：
+在 DSH 桌面端「插件」页的安装入口填入仓库地址（下面几种写法都行）：
 
 ```
 https://github.com/yuyiky/dsh-dividend-yield
+https://github.com/yuyiky/dsh-dividend-yield.git
+github:yuyiky/dsh-dividend-yield
+git+https://github.com/yuyiky/dsh-dividend-yield.git#<可选：某次提交的 SHA>
 ```
+
+> 国内网络如果卡在拉取，把安装框上方的「安装源」切成「中国大陆镜像源」再试。
 
 也可以走宿主接口：
 
@@ -83,14 +92,27 @@ https://cdn.jsdelivr.net/gh/yuyiky/dsh-dividend-yield@main/dist/dsh-plugin-index
 }
 ```
 
-### 方式四：发布到 npm
+### 方式四：发布到 npm（目前**没有**发布，仅作维护者参考）
+
+本包**尚未发布到 npm**，所以「填 `dsh-dividend-yield` 就能装」现在是不成立的。如果维护者将来发布：
 
 ```bash
 pnpm publish --access public
-# 之后别人可以直接：installBundle spec = dsh-dividend-yield
+# 发布之后，别人才可以直接：installBundle spec = dsh-dividend-yield
 ```
 
 包名 `dsh-dividend-yield` 在 npm 上若已被占用，可改成 `@你的scope/dsh-dividend-yield` 并同步修改 `dist/dsh-plugin-index.json` 里的 `name`。
+
+## 装不上怎么办
+
+| 现象 | 原因 | 解决 |
+| --- | --- | --- |
+| 输入框变红，提示「未找到相关插件」 | 填的是裸包名，而本包不在 npm 上 | 改成 `https://github.com/yuyiky/dsh-dividend-yield` |
+| 「该路径不存在或不是有效的插件包」 | 本地路径不是绝对路径，或指错了目录 | 用 `git clone` 后的**绝对路径**，且目录里要有 `package.json` |
+| 安装卡住 / `pnpm-missing`、`network` 失败 | 拉取 git 依赖或 registry 不通 | 把「安装源」切成「中国大陆镜像源」；或配置代理后重试 |
+| 装好了但侧栏没有「股息率」 | bundle 没启用 | 在「插件」页确认 `dsh-dividend-yield` 是启用状态，必要时停用再启用一次 |
+| 打开面板一直显示「正在抓取」 | 首次全量抓取中（约 200 次分区请求） | 等 10 秒～3 分钟；进度条会走完。抓不到时看 `/api/dividend-yield/status` 的 `failed` 字段 |
+
 
 ## 发布（维护者）
 

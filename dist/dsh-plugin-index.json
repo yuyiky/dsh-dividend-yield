@@ -82,7 +82,7 @@
           "source": {
             "type": "git",
             "url": "https://github.com/yuyiky/dsh-dividend-yield.git",
-            "commit": "28c4159b2c879a0c19d17530b8c75b4688a869d9"
+            "commit": "c385eb4775f2b6e2fadb9d232f530336e30e0cb0"
           },
           "engines": {
             "dsh": "^0.2.0"
